@@ -1,4 +1,4 @@
-package com.example.pbode.brflickr;
+package com.example.pbode.brflickr.views;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,13 +7,24 @@ import android.view.ViewGroup;
 
 import com.example.pbode.brflickr.databinding.ImageDetailsItemBinding;
 import com.example.pbode.brflickr.service.ImageDetails;
+import com.example.pbode.brflickr.viewmodels.ImageDetailsViewModel;
+import com.example.pbode.brflickr.viewmodels.ImageSearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultViewHolder> {
 
     private List<ImageDetails> imageList = new ArrayList<>();
+    private ImageDetailsViewModel.Factory imageDetailsViewModelFactory;
+    private ImageSearchViewModel imageSearchViewModel;
+
+    @Inject
+    public SearchResultsAdapter(ImageDetailsViewModel.Factory imageDetailsViewModelFactory) {
+        this.imageDetailsViewModelFactory = imageDetailsViewModelFactory;
+    }
 
     @NonNull
     @Override
@@ -25,7 +36,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultViewH
 
     @Override
     public void onBindViewHolder(SearchResultViewHolder holder, int position) {
-        holder.bind(new ImageDetailsViewModel(imageList.get(position)));
+        holder.bind(imageDetailsViewModelFactory.newInstance(imageList.get(position)));
     }
 
     @Override
@@ -35,5 +46,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultViewH
 
     public void setPhotoList(List<ImageDetails> imageDetailsList) {
         this.imageList = imageDetailsList;
+    }
+
+    public void setImageSearchViewModel(ImageSearchViewModel imageSearchViewModel) {
+        this.imageSearchViewModel = imageSearchViewModel;
     }
 }

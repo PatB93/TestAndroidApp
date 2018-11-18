@@ -1,5 +1,7 @@
 package com.example.pbode.brflickr.service;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -15,6 +17,7 @@ public class ImageSearchProvider {
 
     private ImageSearchService service;
 
+    @Inject
     public ImageSearchProvider() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);

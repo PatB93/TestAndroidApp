@@ -6,13 +6,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class ImageRequestProviderTest {
+public class ImageUrlBuilderTest {
 
-    private ImageRequestProvider subject;
+    private ImageUrlBuilder subject;
 
     @Before
     public void setup() {
-        subject = new ImageRequestProvider(1);
+        subject = new ImageUrlBuilder(1);
     }
 
     @Test
