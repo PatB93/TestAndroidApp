@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ImageSearchProvider {
     private static final String FLICKR_SEARCH_URL = "https://api.flickr.com";
     private static final String FLICKR_API_KEY = "1508443e49213ff84d566777dc211f2a";
+    private static final int RESULTS_PER_PAGE = 25;
 
     private ImageSearchService service;
 
@@ -31,12 +32,12 @@ public class ImageSearchProvider {
     }
 
     public Single<ImageSearchResponse> searchImages(String query) {
-        return service.searchImages(FLICKR_API_KEY, query)
+        return service.searchImages(FLICKR_API_KEY, query, RESULTS_PER_PAGE)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<ImageSearchResponse> searchImages(String query, int page) {
-        return service.searchImages(FLICKR_API_KEY, query, page)
+        return service.searchImages(FLICKR_API_KEY, query, page, RESULTS_PER_PAGE)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }
