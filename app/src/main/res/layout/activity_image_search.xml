@@ -2,10 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.example.pbode.brflickr.viewmodels.ImageSearchViewModel"/>
+            type="com.example.pbode.brflickr.viewmodels.ImageSearchViewModel" />
+
+        <import type="android.view.View"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -58,8 +62,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_margin="20dp"
-                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}"
-                        android:gravity="bottom">
+                        android:gravity="bottom"
+                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}">
 
                     </android.support.v7.widget.SearchView>
 
@@ -80,8 +84,48 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/photo_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </android.support.v4.widget.NestedScrollView>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:visibility="@{viewModel.showPageSelectionBar ? View.VISIBLE : View.GONE}"
+            android:background="#000000">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_left"
+                android:visibility="@{viewModel.showBackButton ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> viewModel.getPreviousPage()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.pagesOfTotal}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/next"
+                app:layout_constraintStart_toEndOf="@+id/back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1/18" />
+
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_right"
+                android:visibility="@{viewModel.showNextButton ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> viewModel.getNextPage()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

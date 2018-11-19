@@ -34,4 +34,9 @@ public class ImageSearchProvider {
         return service.searchImages(FLICKR_API_KEY, query)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
+
+    public Single<ImageSearchResponse> searchImages(String query, int page) {
+        return service.searchImages(FLICKR_API_KEY, query, page)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 }

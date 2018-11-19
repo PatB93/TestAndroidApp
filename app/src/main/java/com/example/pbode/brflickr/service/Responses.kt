@@ -6,7 +6,7 @@ class ImageSearchResponse(@SerializedName("photos") val photoListResponse: Photo
 
 class PhotoListResponse(
         @SerializedName("page") val page: Int,
-        @SerializedName("pages") val pages: Int,
+        @SerializedName("pages") val totalPages: Int,
         @SerializedName("perPage") val perPage: Int,
         @SerializedName("total") val total: Int,
         @SerializedName("photo") val imageDetailsList: List<ImageDetails>
