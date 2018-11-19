@@ -30,7 +30,9 @@ public class ImageSearchViewModel {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                if (query.length() > 2) {
+                if (query.isEmpty()) {
+                    clearImageList();
+                } if (query.length() > 2) {
                     getImageListForQuery(query);
                 }
                 return false;
