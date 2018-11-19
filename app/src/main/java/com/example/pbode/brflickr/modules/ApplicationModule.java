@@ -1,8 +1,11 @@
 package com.example.pbode.brflickr.modules;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.example.pbode.brflickr.database.SearchDatabase;
+import com.example.pbode.brflickr.database.SearchHistoryDao;
 import com.example.pbode.brflickr.utils.UiResourceProvider;
 
 import dagger.Module;
@@ -25,5 +28,15 @@ public class ApplicationModule {
     @Provides
     public Context provideContext() {
         return application.getApplicationContext();
+    }
+
+    @Provides
+    public SearchHistoryDao provideSearchHistoryDao(SearchDatabase db) {
+        return db.searchHistoryDao();
+    }
+
+    @Provides
+    public SearchDatabase provideSearchDatabase(Context context) {
+        return Room.databaseBuilder(context, SearchDatabase.class, "searchHistory.db").build();
     }
 }

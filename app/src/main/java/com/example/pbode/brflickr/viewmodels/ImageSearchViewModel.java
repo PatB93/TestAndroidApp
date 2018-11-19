@@ -2,9 +2,12 @@ package com.example.pbode.brflickr.viewmodels;
 
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.v4.widget.CursorAdapter;
 import android.support.v7.widget.SearchView;
-
+import com.example.pbode.brflickr.database.SearchHistory;
+import com.example.pbode.brflickr.database.SearchHistoryDao;
 import com.example.pbode.brflickr.service.PhotoListResponse;
+import com.example.pbode.brflickr.utils.SearchSuggestionCursorAdapter;
 import com.example.pbode.brflickr.views.SearchResultsAdapter;
 import com.example.pbode.brflickr.service.ImageSearchProvider;
 
@@ -18,16 +21,20 @@ public class ImageSearchViewModel {
     public ObservableBoolean showNextButton = new ObservableBoolean(false);
     public ObservableField<String> pagesOfTotal = new ObservableField<>("");
 
-    private ImageSearchProvider imageSearchProvider;
-    private SearchResultsAdapter adapter;
+    private final ImageSearchProvider imageSearchProvider;
+    private final SearchResultsAdapter adapter;
+    private final SearchHistoryDao searchHistoryDao;
+    private final SearchSuggestionCursorAdapter.Factory searchSuggestionCursorAdapterFactory;
     private PhotoListResponse photoListResponse;
     private int currentPage = 0;
     private String query = "";
 
     @Inject
-    public ImageSearchViewModel(ImageSearchProvider imageSearchProvider, SearchResultsAdapter adapter) {
+    public ImageSearchViewModel(ImageSearchProvider imageSearchProvider, SearchResultsAdapter adapter, SearchHistoryDao searchHistoryDao, SearchSuggestionCursorAdapter.Factory searchSuggestionCursorAdapterFactory) {
         this.imageSearchProvider = imageSearchProvider;
         this.adapter = adapter;
+        this.searchHistoryDao = searchHistoryDao;
+        this.searchSuggestionCursorAdapterFactory = searchSuggestionCursorAdapterFactory;
         adapter.setImageSearchViewModel(this);
     }
 
@@ -36,6 +43,7 @@ public class ImageSearchViewModel {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 getImageListForQuery(query);
+                searchHistoryDao.addSearch(new SearchHistory(query));
                 return true;
             }
 
@@ -49,6 +57,10 @@ public class ImageSearchViewModel {
                 return false;
             }
         };
+    }
+
+    public CursorAdapter getSuggestionAdapter() {
+        return searchSuggestionCursorAdapterFactory.newInstance(searchHistoryDao.getHistory("dog"));
     }
 
     public void getNextPage() {

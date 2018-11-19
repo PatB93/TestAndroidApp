@@ -1,0 +1,55 @@
+Index: app/src/main/res/layout/activity_image_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <data>\n\n        <variable\n            name=\"viewModel\"\n            type=\"com.example.pbode.brflickr.viewmodels.ImageSearchViewModel\" />\n\n        <import type=\"android.view.View\" />\n    </data>\n\n    <android.support.design.widget.CoordinatorLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\"\n        android:fitsSystemWindows=\"true\"\n        tools:context=\".views.ImageSearchActivity\">\n\n        <android.support.design.widget.AppBarLayout\n            android:id=\"@+id/app_bar\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"@dimen/app_bar_height\"\n            android:fitsSystemWindows=\"true\"\n            android:theme=\"@style/AppTheme.AppBarOverlay\">\n\n            <android.support.design.widget.CollapsingToolbarLayout\n                android:id=\"@+id/toolbar_layout\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:fitsSystemWindows=\"true\"\n                app:contentScrim=\"?attr/colorPrimary\"\n                app:layout_scrollFlags=\"scroll|exitUntilCollapsed\"\n                app:toolbarId=\"@+id/toolbar\">\n\n                <TextView\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"wrap_content\"\n                    android:gravity=\"center\"\n                    android:text=\"@string/search_powered_by\" />\n\n                <TextView\n                    android:id=\"@+id/title\"\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"wrap_content\"\n                    android:layout_marginTop=\"40dp\"\n                    android:gravity=\"center\"\n                    android:text=\"@string/api_brand\"\n                    android:textSize=\"42sp\" />\n\n                <android.support.v7.widget.Toolbar\n                    android:id=\"@+id/toolbar\"\n                    android:layout_width=\"match_parent\"\n                    android:layout_height=\"?attr/actionBarSize\"\n                    android:layout_gravity=\"bottom\"\n                    app:layout_collapseMode=\"pin\"\n                    app:popupTheme=\"@style/AppTheme.PopupOverlay\">\n\n                    <android.support.v7.widget.SearchView\n                        android:id=\"@+id/search_bar\"\n                        android:layout_width=\"match_parent\"\n                        android:layout_height=\"20dp\"\n                        android:layout_margin=\"20dp\"\n                        android:gravity=\"bottom\"\n                        app:onQueryTextChanged=\"@{viewModel.getQueryTextListener()}\">\n\n                    </android.support.v7.widget.SearchView>\n\n                </android.support.v7.widget.Toolbar>\n\n            </android.support.design.widget.CollapsingToolbarLayout>\n        </android.support.design.widget.AppBarLayout>\n\n        <android.support.v4.widget.NestedScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\n            xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n            xmlns:tools=\"http://schemas.android.com/tools\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"match_parent\"\n            app:layout_behavior=\"@string/appbar_scrolling_view_behavior\"\n            tools:context=\".views.ImageSearchActivity\"\n            tools:showIn=\"@layout/activity_image_search\">\n\n            <android.support.v7.widget.RecyclerView\n                android:id=\"@+id/photo_list_view\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\" />\n\n        </android.support.v4.widget.NestedScrollView>\n\n        <android.support.constraint.ConstraintLayout\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            android:layout_gravity=\"bottom\"\n            android:background=\"#000000\"\n            android:visibility=\"@{viewModel.showPageSelectionBar ? View.VISIBLE : View.GONE}\">\n\n            <ImageView\n                android:id=\"@+id/back\"\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:padding=\"20dp\"\n                android:onClick=\"@{() -> viewModel.getPreviousPage()}\"\n                android:src=\"@drawable/ic_chevron_left\"\n                android:visibility=\"@{viewModel.showBackButton ? View.VISIBLE : View.GONE}\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintStart_toStartOf=\"parent\"\n                app:layout_constraintTop_toTopOf=\"parent\" />\n\n            <TextView\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:text=\"@{viewModel.pagesOfTotal}\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintEnd_toStartOf=\"@+id/next\"\n                app:layout_constraintStart_toEndOf=\"@+id/back\"\n                app:layout_constraintTop_toTopOf=\"parent\"\n                tools:text=\"1/18\" />\n\n            <ImageView\n                android:id=\"@+id/next\"\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:padding=\"20dp\"\n                android:onClick=\"@{() -> viewModel.getNextPage()}\"\n                android:src=\"@drawable/ic_chevron_right\"\n                android:visibility=\"@{viewModel.showNextButton ? View.VISIBLE : View.GONE}\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintEnd_toEndOf=\"parent\"\n                app:layout_constraintTop_toTopOf=\"parent\" />\n        </android.support.constraint.ConstraintLayout>\n    </android.support.design.widget.CoordinatorLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_image_search.xml	(date 1542602785000)
++++ app/src/main/res/layout/activity_image_search.xml	(date 1542668976951)
+@@ -63,7 +63,8 @@
+                         android:layout_height="20dp"
+                         android:layout_margin="20dp"
+                         android:gravity="bottom"
+-                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}">
++                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}"
++                        app:setSuggestionAdapter="@{viewModel.getSuggestionAdapter()}">
+ 
+                     </android.support.v7.widget.SearchView>
+ 
+Index: app/src/main/java/com/example/pbode/brflickr/utils/BindingAdapters.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pbode.brflickr.utils;\n\nimport android.databinding.BindingAdapter;\nimport android.graphics.Bitmap;\nimport android.support.v7.widget.RecyclerView;\nimport android.support.v7.widget.SearchView;\nimport android.widget.ImageView;\n\nimport dagger.BindsInstance;\n\nimport static android.support.v7.widget.SearchView.*;\n\npublic class BindingAdapters {\n\n    @BindingAdapter(\"onQueryTextChanged\")\n    public static void setOnQueryTextChangedListener(SearchView view, OnQueryTextListener listener) {\n        view.setOnQueryTextListener(listener);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pbode/brflickr/utils/BindingAdapters.java	(date 1542602785000)
++++ app/src/main/java/com/example/pbode/brflickr/utils/BindingAdapters.java	(date 1542668976943)
+@@ -1,14 +1,10 @@
+ package com.example.pbode.brflickr.utils;
+ 
+ import android.databinding.BindingAdapter;
+-import android.graphics.Bitmap;
+-import android.support.v7.widget.RecyclerView;
++import android.support.v4.widget.CursorAdapter;
+ import android.support.v7.widget.SearchView;
+-import android.widget.ImageView;
+ 
+-import dagger.BindsInstance;
+-
+-import static android.support.v7.widget.SearchView.*;
++import static android.support.v7.widget.SearchView.OnQueryTextListener;
+ 
+ public class BindingAdapters {
+ 
+@@ -16,4 +12,9 @@
+     public static void setOnQueryTextChangedListener(SearchView view, OnQueryTextListener listener) {
+         view.setOnQueryTextListener(listener);
+     }
++
++    @BindingAdapter("setSuggestionAdapter")
++    public static void setSuggestionAdapter(SearchView view, CursorAdapter cursorAdapter) {
++        view.setSuggestionsAdapter(cursorAdapter);
++    }
+ }

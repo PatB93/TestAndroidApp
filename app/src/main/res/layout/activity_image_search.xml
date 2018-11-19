@@ -63,7 +63,8 @@
                         android:layout_height="20dp"
                         android:layout_margin="20dp"
                         android:gravity="bottom"
-                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}">
+                        app:onQueryTextChanged="@{viewModel.getQueryTextListener()}"
+                        app:setSuggestionAdapter="@{viewModel.getSuggestionAdapter()}">
 
                     </android.support.v7.widget.SearchView>
 

@@ -1,15 +1,16 @@
 package com.example.pbode.brflickr;
 
+import com.example.pbode.brflickr.database.SearchHistoryDao;
 import com.example.pbode.brflickr.service.ImageDetails;
 import com.example.pbode.brflickr.service.ImageSearchProvider;
 import com.example.pbode.brflickr.service.ImageSearchResponse;
 import com.example.pbode.brflickr.service.PhotoListResponse;
+import com.example.pbode.brflickr.utils.SearchSuggestionCursorAdapter;
 import com.example.pbode.brflickr.viewmodels.ImageSearchViewModel;
 import com.example.pbode.brflickr.views.SearchResultsAdapter;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -23,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +35,12 @@ public class ImageSearchViewModelTest {
     @Mock
     private SearchResultsAdapter adapter;
 
+    @Mock
+    private SearchHistoryDao searchHistoryDao;
+
+    @Mock
+    private SearchSuggestionCursorAdapter.Factory searchSuggestionCursorAdapter;
+
     private ImageSearchViewModel subject;
     private ImageDetails imageDetails;
     private PhotoListResponse photoListResponsePageOne;
@@ -45,7 +51,7 @@ public class ImageSearchViewModelTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        subject = new ImageSearchViewModel(imageSearchProvider, adapter);
+        subject = new ImageSearchViewModel(imageSearchProvider, adapter, searchHistoryDao, searchSuggestionCursorAdapter);
         imageDetails = new ImageDetails("", "", "", "", 1, "", 1, 1, 1);
         photoListResponsePageOne = new PhotoListResponse(1, 2, 25, 50, Collections.singletonList(imageDetails));
         imageSearchResponsePageOne = new ImageSearchResponse(photoListResponsePageOne);
