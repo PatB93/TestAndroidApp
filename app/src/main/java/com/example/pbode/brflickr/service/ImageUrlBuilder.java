@@ -1,6 +1,19 @@
 package com.example.pbode.brflickr.service;
 
 public final class ImageUrlBuilder {
+    private static final String SMALL_SQ = "s";
+    private static final String LARGE_SQ = "q";
+    private static final String THUMBNAIL = "t";
+    private static final String x_SMALL = "m";
+    private static final String SMALL = "n";
+    private static final String MEDIUM_SMALL = "-";
+    private static final String MEDIUM = "z";
+    private static final String MEDIUM_LARGE = "c";
+    private static final String LARGE = "b";
+    private static final String X_LARGE = "h";
+    private static final String XX_LARGE = "k";
+    private static final String ORIGINAL = "o";
+
     private static final String BASE_PHOTO_URL = "https://farm%d.staticflickr.com/%s/%s_%s_%s.jpg";
     private int farm = 0;
     private String serverId = "";
@@ -28,13 +41,13 @@ public final class ImageUrlBuilder {
         return this;
     }
 
-    public ImageUrlBuilder imageType(String imageType) {
-        this.imageType = imageType;
+    public ImageUrlBuilder mediumImage() {
+        this.imageType = MEDIUM;
         return this;
     }
 
     public ImageUrlBuilder thumbnail() {
-        this.imageType = "t";
+        this.imageType = THUMBNAIL;
         return this;
     }
 

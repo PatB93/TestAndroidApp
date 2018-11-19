@@ -1,5 +1,6 @@
 package com.example.pbode.brflickr.modules;
 
+import com.example.pbode.brflickr.views.FullImageActivity;
 import com.example.pbode.brflickr.views.ImageSearchActivity;
 
 import dagger.Module;
@@ -10,4 +11,7 @@ public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector()
     abstract ImageSearchActivity provideImageSearchActivity();
+
+    @ContributesAndroidInjector()
+    abstract FullImageActivity provideFullImageActivity();
 }

@@ -22,8 +22,8 @@ public class ImageDetailsViewModel {
         this.glideProvider = glideProvider;
         thumbnail.set(resourceProvider.getImage(R.drawable.ic_image_not_found));
         fullImage.set(resourceProvider.getImage(R.drawable.ic_image_not_found));
-        setImageFromUrl(imageDetails, thumbnail);
-        setImageFromUrl(imageDetails, fullImage);
+        setThumbnailImageFromUrl(imageDetails, thumbnail);
+        setFullImageFromUrl(imageDetails, fullImage);
     }
 
     public String getTitle() {
@@ -34,7 +34,7 @@ public class ImageDetailsViewModel {
         glideProvider.loadUrlToTarget(imageUrl, targetImage);
     }
 
-    private void setImageFromUrl(ImageDetails imageDetails, ObservableField<Drawable> imageField) {
+    private void setThumbnailImageFromUrl(ImageDetails imageDetails, ObservableField<Drawable> imageField) {
         ImageUrlBuilder imageUrlBuilder = new ImageUrlBuilder();
         String url = imageUrlBuilder
                 .farm(imageDetails.getFarm())
@@ -42,6 +42,18 @@ public class ImageDetailsViewModel {
                 .photoId(imageDetails.getId())
                 .secret(imageDetails.getSecret())
                 .thumbnail()
+                .build();
+        fetchImage(url, imageField);
+    }
+
+    private void setFullImageFromUrl(ImageDetails imageDetails, ObservableField<Drawable> imageField) {
+        ImageUrlBuilder imageUrlBuilder = new ImageUrlBuilder();
+        String url = imageUrlBuilder
+                .farm(imageDetails.getFarm())
+                .serverId(imageDetails.getServer())
+                .photoId(imageDetails.getId())
+                .secret(imageDetails.getSecret())
+                .mediumImage()
                 .build();
         fetchImage(url, imageField);
     }
