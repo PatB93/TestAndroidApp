@@ -64,21 +64,9 @@ public class ImageSearchViewModelTest {
     }
 
     @Test
-    public void getQueryTextListener_onQueryTextChangedAndQueryIsEmptyAfterSearching_makesSearchRequestAndUpdatesUi() {
-        when(imageSearchProvider.searchImages(anyString())).thenReturn(Single.just(imageSearchResponsePageOne));
-
-        subject.getQueryTextListener().onQueryTextChange("ne");
-
-        verify(imageSearchProvider, never()).searchImages(anyString());
-        assertEquals(0, subject.getAdapter().getItemCount());
-    }
-
-    @Test
     public void getQueryTextListener_onQueryTextChangedAndLengthShorterThanThreeCharacters_makesSearchRequestAndUpdatesUi() {
         when(imageSearchProvider.searchImages(anyString())).thenReturn(Single.just(imageSearchResponsePageOne));
 
-        subject.getQueryTextListener().onQueryTextChange("newText");
-        reset(imageSearchProvider);
         subject.getQueryTextListener().onQueryTextChange("ne");
 
         verify(imageSearchProvider, never()).searchImages(anyString());

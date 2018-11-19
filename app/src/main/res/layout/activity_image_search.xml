@@ -9,7 +9,7 @@
             name="viewModel"
             type="com.example.pbode.brflickr.viewmodels.ImageSearchViewModel" />
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -90,18 +90,19 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:visibility="@{viewModel.showPageSelectionBar ? View.VISIBLE : View.GONE}"
-            android:background="#000000">
+            android:background="#000000"
+            android:visibility="@{viewModel.showPageSelectionBar ? View.VISIBLE : View.GONE}">
 
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:onClick="@{() -> viewModel.getPreviousPage()}"
                 android:src="@drawable/ic_chevron_left"
                 android:visibility="@{viewModel.showBackButton ? View.VISIBLE : View.GONE}"
-                android:onClick="@{() -> viewModel.getPreviousPage()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -120,9 +121,10 @@
                 android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:onClick="@{() -> viewModel.getNextPage()}"
                 android:src="@drawable/ic_chevron_right"
                 android:visibility="@{viewModel.showNextButton ? View.VISIBLE : View.GONE}"
-                android:onClick="@{() -> viewModel.getNextPage()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

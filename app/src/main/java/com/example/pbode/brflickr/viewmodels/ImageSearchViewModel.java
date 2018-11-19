@@ -72,6 +72,9 @@ public class ImageSearchViewModel {
     }
 
     private void clearImageList() {
+        showPageSelectionBar.set(false);
+        showBackButton.set(false);
+        showNextButton.set(false);
         adapter.setPhotoList(new ArrayList<>());
         adapter.notifyDataSetChanged();
     }
