@@ -17,5 +17,7 @@ public class FullImageActivity extends AppCompatActivity {
         ImageDetailsTransfer imageDetailsTransfer = (ImageDetailsTransfer) DataTransferLayer.getData(SearchResultViewHolder.class);
         ActivityFullImageBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_full_image);
         binding.setViewModel(imageDetailsTransfer.getImageDetailsViewModel());
+
+        binding.toolbar.setOnClickListener(view -> finish());
     }
 }
